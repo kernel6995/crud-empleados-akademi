@@ -14,27 +14,47 @@ function FormEmployee({ employeeData, onCreate, onEdit }) {
     const [commissionPCT, setCommissionPCT] = useState(employeeData ? employeeData.COMMISSION_PCT : '');
 
     const handleFirstName = (event) => {
-        setFirstName(event.target.value);
+        if (event.target.selectionStart <= 15) {
+            setFirstName(event.target.value.toLowerCase());
+        } else {
+            alert("alcanzo el maximo de caracteres permitidos");
+        }
     };
 
     const handleLastName = (event) => {
-        setLastName(event.target.value);
+        if (event.target.selectionStart <= 15) {
+            setLastName(event.target.value.toLowerCase());
+        } else {
+            alert("alcanzo el maximo de caracteres permitidos");
+        }
     };
 
     const handleEmail = (event) => {
-        setEmail(event.target.value);
+        if (event.target.selectionStart <= 30) {
+            setEmail(event.target.value.toLowerCase());
+        } else {
+            alert("alcanzo el maximo de caracteres permitidos");
+        }
     };
 
     const handlePhoneNumber = (event) => {
-        setPhoneNumber(event.target.value);
+        if (!isNaN(event.target.value)) {
+            setPhoneNumber(event.target.value);
+        }
     };
 
-    const handleSalary = (event) => {
-        setSalari(event.target.value);
-    };
+    const handleSalary = event => {
+        if (!isNaN(event.target.value)) {
+            setSalari(parseFloat(event.target.value));
+        }
+    }
 
     const handleCommissionPCT = (event) => {
-        setCommissionPCT(event.target.value);
+        if (event.target.selectionStart <= 10) {
+            setCommissionPCT(event.target.value.toLowerCase());
+        } else {
+            alert("alcanzo el maximo de caracteres permitidos");
+        }
     };
 
     const handleSubmit = (evemt) => {
@@ -91,7 +111,7 @@ function FormEmployee({ employeeData, onCreate, onEdit }) {
 
             <InputField
                 label='nombre'
-                maxLength={10}
+                maxLength={15}
                 name='FIRST_NAME'
                 onChange={handleFirstName}
                 placeholder='ej: mario'
@@ -101,7 +121,7 @@ function FormEmployee({ employeeData, onCreate, onEdit }) {
 
             <InputField
                 label='apellido'
-                maxLength={10}
+                maxLength={15}
                 name='LAST_NAME'
                 onChange={handleLastName}
                 placeholder='ej: bross'
