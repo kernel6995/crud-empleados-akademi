@@ -3,9 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialEmployees = [
     {
         EMPLOYEE_ID: 1,
-        FIRST_NAME: 'Carl',
-        LAST_NAME: 'Jonson',
-        EMAIL: 'carl@mail.com',
+        FIRST_NAME: 'carl',
+        LAST_NAME: 'johnson',
+        EMAIL: 'johnson@mail.com',
         PHONE_NUMBER: '3813000000',
         HIRE_DATE: '03/07/2001',
         SALARY: 100000,
@@ -13,9 +13,9 @@ const initialEmployees = [
     },
     {
         EMPLOYEE_ID: 2,
-        FIRST_NAME: 'Tommy',
-        LAST_NAME: 'Versety',
-        EMAIL: 'mail_disel@mail.com',
+        FIRST_NAME: 'tommy',
+        LAST_NAME: 'vercetti',
+        EMAIL: 'vercetti@mail.com',
         PHONE_NUMBER: '3813000001',
         HIRE_DATE: '12/07/200',
         SALARY: 100000,
@@ -23,8 +23,8 @@ const initialEmployees = [
     },
     {
         EMPLOYEE_ID: 3,
-        FIRST_NAME: 'Gordon',
-        LAST_NAME: 'Freeman',
+        FIRST_NAME: 'gordon',
+        LAST_NAME: 'freeman',
         EMAIL: 'freeman@mail.com',
         PHONE_NUMBER: '3813000002',
         HIRE_DATE: '01/02/2003',
@@ -46,13 +46,12 @@ const employeesSlice = createSlice({
             state.employees.push(action.payload);
         },
         editEmployee: (state, action) => {
-            const { id, newData } = action.payload;
-            const index = state.employees.findIndex((employee) => employee.id === id);
-            state.employees[index] = { ...state.employees[index], ...newData };
+            const employeeToEdit = action.payload;
+            const index = state.employees.findIndex((emp) => emp.EMPLOYEE_ID === employeeToEdit.EMPLOYEE_ID);
+            state.employees[index] = { ...state.employees[index], ...employeeToEdit };
         },
         deleteEmployee: (state, action) => {
-            const index = state.employees.findIndex((employee) => employee.id === action.payload);
-            state.employees.splice(index, 1);
+            state.employees = state.employees.filter((emp) => emp.EMPLOYEE_ID !== action.payload);
         },
     },
 });

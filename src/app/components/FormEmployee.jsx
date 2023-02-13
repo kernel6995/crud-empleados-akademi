@@ -1,24 +1,16 @@
 // @ts-check
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import { addEmployee, editEmployee } from '../features/employees/employeesSlice';
 
 // Components
 import Button from './Button';
 
-function FormEmployee() {
-    const dispatch = useDispatch();
-
-    const navigate = useNavigate();
-    const params = useParams();
-
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('@mail.com');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [salary, setSalari] = useState('');
-    const [commissionPCT, setCommissionPCT] = useState('');
+function FormEmployee({ employeeData, onCreate, onEdit }) {
+    const [firstName, setFirstName] = useState(employeeData ? employeeData.FIRST_NAME : '');
+    const [lastName, setLastName] = useState(employeeData ? employeeData.LAST_NAME : '');
+    const [email, setEmail] = useState(employeeData ? employeeData.EMAIL : '@mail.com');
+    const [phoneNumber, setPhoneNumber] = useState(employeeData ? employeeData.PHONE_NUMBER : '');
+    const [salary, setSalari] = useState(employeeData ? employeeData.SALARY : '');
+    const [commissionPCT, setCommissionPCT] = useState(employeeData ? employeeData.COMMISSION_PCT : '');
 
     const handleFirstName = (event) => {
         setFirstName(event.target.value);
@@ -44,7 +36,7 @@ function FormEmployee() {
         setCommissionPCT(event.target.value);
     };
 
-    const handleSubmit = async (evemt) => {
+    const handleSubmit = (evemt) => {
         evemt.preventDefault();
 
         if (
@@ -52,18 +44,17 @@ function FormEmployee() {
             lastName &&
             email
         ) {
-            if (params.id) {
-                dispatch(editEmployee({
-                    EMPLOYEE_ID: params.id,
+            if (employeeData) {
+                onEdit({
                     FIRST_NAME: firstName,
                     LAST_NAME: lastName,
                     EMAIL: email,
                     PHONE_NUMBER: phoneNumber,
                     SALARY: salary,
                     COMMISSION_PCT: commissionPCT,
-                }));
+                });
             } else {
-                dispatch(addEmployee({
+                onCreate({
                     EMPLOYEE_ID: Date.now(),
                     FIRST_NAME: firstName,
                     LAST_NAME: lastName,
@@ -72,7 +63,7 @@ function FormEmployee() {
                     HIRE_DATE: Date.now(),
                     SALARY: salary,
                     COMMISSION_PCT: commissionPCT,
-                }));
+                });
             }
 
             setFirstName('');
@@ -81,8 +72,6 @@ function FormEmployee() {
             setPhoneNumber('');
             setSalari('');
             setCommissionPCT('');
-
-            navigate('/');
         } else {
             alert('COMPLETA LOS CAMPOS REQUERIDOS!!!');
         }
@@ -139,6 +128,7 @@ function FormEmployee() {
                     className='p-1 border-2 border-slate-400 rounded-md'
                     id='PHONE_NUMBER'
                     maxLength={11}
+                    minLength={10 || 0}
                     name='PHONE_NUMBER'
                     onChange={handlePhoneNumber}
                     pattern='^\d{10,11}$'

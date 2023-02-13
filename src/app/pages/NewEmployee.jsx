@@ -1,4 +1,8 @@
 // @ts-check
+import { useDispatch } from 'react-redux';
+import { addEmployee } from '../features/employees/employeesSlice';
+import { useNavigate } from 'react-router-dom';
+
 // Components
 import FormEmployee from '../components/FormEmployee';
 import ButtonLink from '../components/ButtonLink';
@@ -7,6 +11,15 @@ import ButtonLink from '../components/ButtonLink';
 import { IconKeyboardArrowLeft } from '../utilities/styledIconsSVG';
 
 function NewEmployee() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleAddEmployee = (data) => {
+        dispatch(addEmployee(data));
+
+        navigate('/');
+    }
+
     return (
         <main className='flex flex-col gap-4 p-4'>
             <header className='flex justify-between'>
@@ -20,7 +33,7 @@ function NewEmployee() {
             </header>
 
             <section className='flex flex-col gap-4'>
-                <FormEmployee />
+                <FormEmployee onCreate={handleAddEmployee} />
             </section>
         </main>
     );
