@@ -13,7 +13,7 @@ function Home() {
     const employeesState = useSelector(state => state.employees.employees);
 
     return (
-        <main className='flex flex-col gap-4 p-4'>
+        <main className='flex flex-col gap-4 p-4 min-h-screen'>
             <header className='flex justify-between'>
                 <h3 className='text-2xl'>lista de empleados</h3>
 
@@ -24,7 +24,7 @@ function Home() {
                 </div>
             </header>
 
-            <section className='flex flex-col gap-4'>
+            <section className='flex flex-col gap-4 justify-between'>
                 {
                     employeesState.length > 0 ?
                         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-start'>
@@ -73,6 +73,8 @@ function Home() {
                     </div>
 
                     <p>pagina 0/0</p>
+
+                    <p>total de empleados {employeesState.length}</p>
                 </div>
             </section>
         </main>

@@ -37,10 +37,17 @@ function Card({ _idEmployee, children, title }) {
                     </section>
 
                     <div className='flex gap-2 justify-end'>
-                        <ButtonLink href={`/editar_empleado/${_idEmployee}`}>
+                        <ButtonLink
+                            color='bg-blue-400'
+                            href={`/editar_empleado/${_idEmployee}`}
+                        >
                             Editar<IconEdit />
                         </ButtonLink>
-                        <Button title='eliminar' onClick={() => handleDeleteEmployee(_idEmployee)}>
+                        <Button
+                            color='bg-red-400'
+                            onClick={() => handleDeleteEmployee(_idEmployee)}
+                            title='eliminar'
+                        >
                             Eliminar<IconDelete />
                         </Button>
                     </div>

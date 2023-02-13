@@ -1,7 +1,14 @@
 # crud-empleados-akademi
-React js - Redux Toolkit - Tailwind
+React js - Redux Toolkit - Tailwind - React Router V6
 
-INSTALACIÓN
+INSTALACION:
+1. clonar el repositorio con: git clone [link del repositorio]
+
+2. en la consola, dentro de la carpeta clonada, ejecutar el comando npm install
+
+3. ejecutar el proyecto con npm run start
+
+PAQUETES QUE SE INSTALARON EN LA APLICACION
 
 1. ReactJS: npx create-react-app my-app
 

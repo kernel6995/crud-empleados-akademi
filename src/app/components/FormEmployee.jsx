@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 // Components
 import Button from './Button';
+import InputField from './InputField';
 
 function FormEmployee({ employeeData, onCreate, onEdit }) {
     const [firstName, setFirstName] = useState(employeeData ? employeeData.FIRST_NAME : '');
@@ -54,13 +55,20 @@ function FormEmployee({ employeeData, onCreate, onEdit }) {
                     COMMISSION_PCT: commissionPCT,
                 });
             } else {
+                const currentDate = new Date(Date.now());
+                const formattedDate = currentDate.toLocaleDateString("es-ES", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                });
+
                 onCreate({
                     EMPLOYEE_ID: Date.now(),
                     FIRST_NAME: firstName,
                     LAST_NAME: lastName,
                     EMAIL: email,
                     PHONE_NUMBER: phoneNumber,
-                    HIRE_DATE: Date.now(),
+                    HIRE_DATE: formattedDate,
                     SALARY: salary,
                     COMMISSION_PCT: commissionPCT,
                 });
@@ -79,90 +87,67 @@ function FormEmployee({ employeeData, onCreate, onEdit }) {
 
     return (
         <form onSubmit={handleSubmit} className='bg-slate-200 border-2 border-slate-400 rounded-xl flex flex-col gap-4 p-4 w-full lg:w-2/4 lg:self-center'>
-            <div className='flex flex-col'>
-                <label htmlFor='FIRST_NAME'>nombre<span className='text-red-700 text-xl'>*</span></label>
-                <input
-                    className='p-1 border-2 border-slate-400 rounded-md'
-                    id='FIRST_NAME'
-                    maxLength={10}
-                    name='FIRST_NAME'
-                    onChange={handleFirstName}
-                    required={true}
-                    type='text'
-                    value={firstName}
-                />
-            </div>
+            <p>completa los campos con <span className='text-red-700 text-xl'>*</span></p>
 
-            <div className='flex flex-col'>
-                <label htmlFor='LAST_NAME'>apellido<span className='text-red-700 text-xl'>*</span></label>
-                <input
-                    className='p-1 border-2 border-slate-400 rounded-md'
-                    id='LAST_NAME'
-                    maxLength={10}
-                    name='LAST_NAME'
-                    onChange={handleLastName}
-                    required={true}
-                    type='text'
-                    value={lastName}
-                />
-            </div>
+            <InputField
+                label='nombre'
+                maxLength={10}
+                name='FIRST_NAME'
+                onChange={handleFirstName}
+                placeholder='ej: mario'
+                required={true}
+                value={firstName}
+            />
 
-            <div className='flex flex-col'>
-                <label htmlFor='EMAIL'>correo electronico<span className='text-red-700 text-xl'>*</span></label>
-                <input
-                    className='p-1 border-2 border-slate-400 rounded-md'
-                    id='EMAIL'
-                    maxLength={30}
-                    name='EMAIL'
-                    onChange={handleEmail}
-                    placeholder='mail@mail.com'
-                    required={true}
-                    type='email'
-                    value={email}
-                />
-            </div>
+            <InputField
+                label='apellido'
+                maxLength={10}
+                name='LAST_NAME'
+                onChange={handleLastName}
+                placeholder='ej: bross'
+                required={true}
+                value={lastName}
+            />
 
-            <div className='flex flex-col'>
-                <label htmlFor='PHONE_NUMBER'>numero telefonico</label>
-                <input
-                    className='p-1 border-2 border-slate-400 rounded-md'
-                    id='PHONE_NUMBER'
-                    maxLength={11}
-                    minLength={10 || 0}
-                    name='PHONE_NUMBER'
-                    onChange={handlePhoneNumber}
-                    pattern='^\d{10,11}$'
-                    placeholder='3813000000'
-                    type='text'
-                    value={phoneNumber}
-                />
-            </div>
+            <InputField
+                label='correo electronico'
+                maxLength={30}
+                name='EMAIL'
+                onChange={handleEmail}
+                placeholder='ej: mail@mail.com'
+                required={true}
+                type='email'
+                value={email}
+            />
 
-            <div className='flex flex-col'>
-                <label htmlFor='SALARY'>salario</label>
-                <input
-                    className='p-1 border-2 border-slate-400 rounded-md'
-                    id='SALARY'
-                    maxLength={10}
-                    name='SALARY'
-                    onChange={handleSalary}
-                    type='text'
-                    value={salary}
-                />
-            </div>
+            <InputField
+                label='numero telefonico'
+                maxLength={11}
+                minLength={10 || 0}
+                name='PHONE_NUMBER'
+                onChange={handlePhoneNumber}
+                pattern='^\d{10,11}$'
+                placeholder='ej: 3815000000'
+                value={phoneNumber}
+            />
 
-            <div className='flex flex-col'>
-                <label htmlFor='COMMISSION_PCT'>comision</label>
-                <input
-                    className='p-1 border-2 border-slate-400 rounded-md'
-                    id='COMMISSION_PCT'
-                    maxLength={10}
-                    name='COMMISSION_PCT'
-                    onChange={handleCommissionPCT}
-                    type='text'
-                    value={commissionPCT}
-                />
-            </div>
+            <InputField
+                label='salario'
+                maxLength={10}
+                name='SALARY'
+                onChange={handleSalary}
+                placeholder='ej: 1.000.000.00'
+                value={salary}
+            />
+
+            <InputField
+                label='comision'
+                maxLength={10}
+                name='COMMISSION_PCT'
+                onChange={handleCommissionPCT}
+                placeholder='ej: A1'
+                value={commissionPCT}
+            />
 
             <div className='self-center'>
                 <Button title='guardar empleado' type="submit">
